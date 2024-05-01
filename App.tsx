@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, TextInput, View, Image } from "react-native";
 import { Input } from "./shared/Input/Input";
+import { Colors, Gaps } from "./shared/tokens";
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
           <Input placeholder="Пароль" />
           <Button title="Войти" />
         </View>
-        <Text>Восстановить пароль</Text>
+        <Text style={styles.link}>Восстановить пароль</Text>
       </View>
     </View>
   );
@@ -27,18 +28,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     padding: 55,
-    backgroundColor: "#16171D",
+    backgroundColor: Colors.violetDark,
   },
   content: {
     alignItems: "center",
-    gap: 50,
+    gap: Gaps.g50,
   },
   logo: {
     width: 220,
   },
   form: {
     alignSelf: "stretch",
-    gap: 16,
+    gap: Gaps.g16,
   },
   btn: {},
+  link: {
+    color: Colors.link,
+  },
 });
