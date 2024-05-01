@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { Button, StyleSheet, Text, TextInput, View, Image } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.content}>
+        <Image
+          style={styles.logo}
+          source={require("./assets/logo.png")}
+          resizeMode="contain"
+        />
+        <View style={styles.form}>
+          <TextInput style={styles.input} placeholder="Email" />
+          <TextInput style={styles.input} placeholder="Пароль" />
+          <Button title="Войти" />
+        </View>
+        <Text>Восстановить пароль</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: "center",
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 55,
+    backgroundColor: "#16171D",
   },
+  content: {
+    alignItems: "center",
+    gap: 50,
+  },
+  logo: {
+    width: 220,
+  },
+  form: {
+    alignSelf: "stretch",
+    gap: 16,
+  },
+  input: {
+    backgroundColor: "#2E2D3D",
+  },
+  btn: {},
 });
