@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, TextInput, View, Image } from "react-native";
+import { Input } from "./shared/Input/Input";
 
 export default function App() {
   return (
@@ -11,8 +12,8 @@ export default function App() {
           resizeMode="contain"
         />
         <View style={styles.form}>
-          <TextInput style={styles.input} placeholder="Email" />
-          <TextInput style={styles.input} placeholder="Пароль" />
+          <Input placeholder="Email" />
+          <Input placeholder="Пароль" />
           <Button title="Войти" />
         </View>
         <Text>Восстановить пароль</Text>
@@ -38,9 +39,6 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: "stretch",
     gap: 16,
-  },
-  input: {
-    backgroundColor: "#2E2D3D",
   },
   btn: {},
 });
