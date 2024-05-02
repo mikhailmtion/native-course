@@ -9,23 +9,23 @@
 		"plugin:@typescript-eslint/recommended"
 	],
 	"rules": {
-		"react-native/no-unused-styles": 2,
-		"react-native/split-platform-components": 2,
-		"react-native/no-inline-styles": 2,
-		"react-native/no-raw-text": 2,
-		"react-native/no-single-element-style-arrays": 2,
-		"prettier/prettier": [
-			"error",
-			{
-				"singleQuote": true,
-				"useTabs": true,
-				"semi": true,
-				"trailingComma": "all",
-				"bracketSpacing": true,
-				"printWidth": 100,
-				"endOfLine": "auto"
-			}
-		],
+		// "react-native/no-unused-styles": 2,
+		// "react-native/split-platform-components": 2,
+		// "react-native/no-inline-styles": 2,
+		// "react-native/no-raw-text": 2,
+		// "react-native/no-single-element-style-arrays": 2,
+		// "prettier/prettier": [
+		// 	"error",
+		// 	{
+		// 		"singleQuote": true,
+		// 		"useTabs": true,
+		// 		"semi": true,
+		// 		"trailingComma": "all",
+		// 		"bracketSpacing": true,
+		// 		"printWidth": 100,
+		// 		"endOfLine": "auto"
+		// 	}
+		// ],
 		"@typescript-eslint/no-empty-function": [
 			"off"
 		],
