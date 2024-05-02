@@ -23,7 +23,7 @@ export const Button = ({
     Animated.timing(animatedValue, {
       toValue: 0,
       duration: 100,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
     props?.onPressIn && props?.onPressIn(e);
   };
@@ -32,7 +32,7 @@ export const Button = ({
     Animated.timing(animatedValue, {
       toValue: 100,
       duration: 100,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
     props?.onPressOut && props?.onPressOut(e);
   };
