@@ -1,14 +1,19 @@
 import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { profileAtom } from "../../entities/user/model/user.state";
+import { loginAtom } from "../../entities/auth/model/auth.state";
 
 export default function MyCourses() {
-  const [profile] = useAtom(profileAtom);
+  const [auth, login] = useAtom(loginAtom);
+
+  useEffect(() => {
+    login({ email: "introair@yandex.ru", password: "12345678" });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>{profile.isLoading}</Text>
+      <Text>{auth?.access_token}</Text>
     </SafeAreaView>
   );
 }
