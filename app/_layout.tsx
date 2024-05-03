@@ -17,7 +17,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="login" />
         <Stack.Screen
-          name="restorer"
+          name="restore"
           options={{
             title: "Восстановление пароля",
             presentation: "modal",
