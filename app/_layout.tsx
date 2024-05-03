@@ -2,12 +2,11 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
+//   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
 export default function RootLayout() {
 //   const insets = useSafeAreaInsets();
-
   return (
     <SafeAreaProvider>
       <StatusBar style="light" />

@@ -31,7 +31,7 @@ export default function Login() {
           <Input placeholder="Пароль" isPassword />
           <Button title="Войти" onPress={alert} />
         </View>
-        <Link href={"/restore"}>
+        <Link href={"/restores"}>
           <Text style={styles.link}>Восстановить пароль</Text>
         </Link>
       </View>
