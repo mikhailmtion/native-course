@@ -1,6 +1,8 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect } from "expo-router";
 import { useAtomValue } from "jotai";
 import { loginAtom } from "../../entities/auth/model/auth.state";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Drawer } from "expo-router/drawer";
 
 export default function AppLayout() {
   const { access_token } = useAtomValue(loginAtom);
@@ -10,13 +12,10 @@ export default function AppLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        contentStyle: {},
-      }}
-    >
-      <Stack.Screen name="index" />
-    </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer>
+        <Drawer.Screen name="index" />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
