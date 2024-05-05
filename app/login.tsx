@@ -3,23 +3,47 @@ import { Input } from "../shared/Input/Input";
 import { Colors, Gaps } from "../shared/tokens";
 import { Button } from "../shared/Button/Button";
 import { ErrorNotification } from "../shared/ErrorNotification/ErrorNotification";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { useAtom } from "jotai";
+import { loginAtom } from "../entities/auth/model/auth.state";
 
 export default function Login() {
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [{ error, access_token }, login] = useAtom(loginAtom);
+  const [localError, setLocalError] = useState<string | undefined>(undefined);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const alert = () => {
-    setError("Error");
-    setTimeout(() => {
-      setError(undefined);
-    }, 4000);
+  const submit = () => {
+    if (!email) {
+      setLocalError("Не введён email");
+      return;
+    }
+
+    if (!password) {
+      setLocalError("Не введён пароль");
+      return;
+    }
+
+    login({ email, password });
   };
+
+  useEffect(() => {
+    if (error) {
+      setLocalError(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (access_token) {
+      router.replace("/(app)");
+    }
+  }, [access_token]);
 
   return (
     <View style={styles.container}>
-      <ErrorNotification error={error} />
+      <ErrorNotification error={localError} />
       <View style={styles.content}>
         <Image
           style={styles.logo}
@@ -27,9 +51,9 @@ export default function Login() {
           resizeMode="contain"
         />
         <View style={styles.form}>
-          <Input placeholder="Email" />
-          <Input placeholder="Пароль" isPassword />
-          <Button title="Войти" onPress={alert} />
+          <Input placeholder="Email" onChangeText={setEmail} />
+          <Input placeholder="Пароль" isPassword onChangeText={setPassword} />
+          <Button title="Войти" onPress={submit} />
         </View>
         <Link href={"/restore"}>
           <Text style={styles.link}>Восстановить пароль</Text>
