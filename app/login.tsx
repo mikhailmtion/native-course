@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import { loginAtom } from "../entities/auth/model/auth.state";
 
 export default function Login() {
-  const [{ error, access_token }, login] = useAtom(loginAtom);
+  const [{ error, access_token, isLoading }, login] = useAtom(loginAtom);
   const [localError, setLocalError] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -53,7 +53,7 @@ export default function Login() {
         <View style={styles.form}>
           <Input placeholder="Email" onChangeText={setEmail} />
           <Input placeholder="Пароль" isPassword onChangeText={setPassword} />
-          <Button title="Войти" onPress={submit} />
+          <Button title="Войти" onPress={submit} isLoading={isLoading} />
         </View>
         <Link href={"/restore"}>
           <Text style={styles.link}>Восстановить пароль</Text>
