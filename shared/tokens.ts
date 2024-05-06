@@ -5,6 +5,7 @@ export const Colors = {
 	primaryHover: '#452481',
 	link: '#A97BFF',
 	gray: '#AFB2BF',
+	blackLight: '#1E1F29',
 };
 
 export const Gaps = {
