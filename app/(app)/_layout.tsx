@@ -4,7 +4,6 @@ import { loginAtom } from "../../entities/auth/model/auth.state";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import { Colors } from "../../shared/tokens";
-import MenuIcon from "../../assets/icons/Menu";
 import { MenuButton } from "../../features/layout/ui/MenuButton";
 import { CustomDrawer } from "../../entities/layout/ui/CustomDrawer";
 
