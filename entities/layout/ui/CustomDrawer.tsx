@@ -16,8 +16,8 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
       {...props}
       contentContainerStyle={styles.scrollView}
     >
-      <CloseDrawer {...props} />
       <View style={styles.content}>
+      <CloseDrawer {...props} />
         <Text>Hello</Text>
       </View>
       <View style={styles.footer}>
