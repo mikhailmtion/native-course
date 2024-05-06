@@ -10,6 +10,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { logoutAtom } from "../../auth/model/auth.state";
 import { loadProfileAtom } from "../../user/model/user.state";
 import { useEffect } from "react";
+import { UserMenu } from "../../user/ui/UserMenu";
 
 export function CustomDrawer(props: DrawerContentComponentProps) {
   const logout = useSetAtom(logoutAtom);
@@ -26,7 +27,7 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
     >
       <View style={styles.content}>
         <CloseDrawer {...props} />
-        <Text style={{ color: "white" }}>{profile?.profile?.name}</Text>
+        <UserMenu profile={profile.profile} />
       </View>
       <View style={styles.footer}>
         <Link style={{ color: Colors.link }} href={"/login"} onPress={logout}>
