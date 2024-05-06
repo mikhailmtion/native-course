@@ -1,10 +1,8 @@
 import {
   Pressable,
-  Text,
   StyleSheet,
   PressableProps,
   View,
-  ActivityIndicator,
 } from "react-native";
 import { Colors } from "../../../shared/tokens";
 import MenuIcon from "../../../assets/icons/Menu";
