@@ -1,4 +1,4 @@
-import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
+import { DrawerContentComponentProps } from "@react-navigation/drawer/lib/typescript/src/types";
 import { useState } from "react";
 import {
   Pressable,
@@ -10,34 +10,35 @@ import {
 import { Colors } from "../../../shared/tokens";
 
 interface MenuItemProps {
-  navigation: DrawerNavigationHelpers;
+  drawer: DrawerContentComponentProps;
   icon: React.ReactNode;
   text: string;
   path: string;
 }
 
 export const MenuItem = ({
-  navigation,
+  drawer,
   icon,
   text,
   path,
   ...props
 }: MenuItemProps & PressableProps) => {
   const [clicked, setClicked] = useState<boolean>(false);
+  const isActive = drawer.state.routes[drawer.state.index].name === path;
 
   return (
     <Pressable
       {...props}
       onPressOut={() => setClicked(false)}
       onPressIn={() => setClicked(true)}
-      onPress={() => navigation.navigate(path)}
+      onPress={() => drawer.navigation.navigate(path)}
     >
       <View
         style={{
           ...styles.menu,
-          borderColor: true ? Colors.primary : Colors.black,
+          borderColor: isActive ? Colors.primary : Colors.black,
           backgroundColor:
-            clicked || true ? Colors.violetDark : Colors.black,
+            clicked || isActive ? Colors.violetDark : Colors.black,
         }}
       >
         {icon}
@@ -59,6 +60,5 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 16,
-    fontFamily: "regular",
   },
 });
