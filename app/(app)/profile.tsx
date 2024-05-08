@@ -5,17 +5,28 @@ import { ImageUploader } from "../../shared/ImageUploader/ImageUploader";
 import { updateProfileAtom } from "../../entities/user/model/user.state";
 import { useAtom } from "jotai";
 import { Button } from "../../shared/Button/Button";
+import * as Sharing from "expo-sharing";
 
 export default function Profile() {
   const [image, setImage] = useState<string>("");
   const [profile, updateProfile] = useAtom(updateProfileAtom);
 
+  const shareProfile = async () => {
+    const isShaingAvailable = await Sharing.isAvailableAsync();
+    if (!isShaingAvailable) {
+      return;
+    }
+    await Sharing.shareAsync("https://purpleschool.ru", {
+      dialogTitle: "Поделиться профилем",
+    });
+  };
+
   const submitProfile = () => {
-		if (!image) {
-			return;
-		}
-		updateProfile({ photo: image });
-	};
+    if (!image) {
+      return;
+    }
+    updateProfile({ photo: image });
+  };
 
   useEffect(() => {
     if (profile && profile.profile?.photo) {
@@ -35,6 +46,7 @@ export default function Profile() {
       )}
       <ImageUploader onUpload={setImage} />
       <Button title="Сохранить" onPress={submitProfile} />
+      <Button title="Поделится" onPress={shareProfile} />
     </SafeAreaView>
   );
 }
