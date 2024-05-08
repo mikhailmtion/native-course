@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ImageUploader } from "../../shared/ImageUploader/ImageUploader";
 
 export default function Profile() {
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string>("");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,7 +24,6 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexDirection: "row",
     gap: 20,
     alignItems: "center",
     paddingHorizontal: 20,

@@ -1,69 +1,118 @@
 import {
+  MediaTypeOptions,
   launchImageLibraryAsync,
   useMediaLibraryPermissions,
   PermissionStatus,
-  MediaTypeOptions,
 } from "expo-image-picker";
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../tokens";
+import FormData from "form-data";
+import axios, { AxiosError } from "axios";
+import { FILE_API } from "../api";
+
+export interface UploadResponse {
+  urls: {
+    original: string;
+    webP: string;
+  };
+}
 
 interface ImageUploaderProps {
   onUpload: (uri: string) => void;
 }
 
-export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
-  const [libraryPermission, requestLibraryPermission] =
+export function ImageUploader({ onUpload }: ImageUploaderProps) {
+  const [libraryPermissions, requestLibraryPermission] =
     useMediaLibraryPermissions();
 
-  const verifyMediaPermission = async () => {
-    if (libraryPermission?.status === PermissionStatus.UNDETERMINED) {
+  const upload = async () => {
+    const isPermissionGranted = await varifyMediaPermissions();
+    if (!isPermissionGranted) {
+      return;
+    }
+    const asset = await pickImage();
+    if (!asset) {
+      return;
+    }
+    const uploadedUrl = await uploadToServer(asset.uri, asset.fileName ?? "");
+    if (!uploadedUrl) {
+      return;
+    }
+    onUpload(uploadedUrl);
+  };
+
+  const varifyMediaPermissions = async () => {
+    if (libraryPermissions?.status === PermissionStatus.UNDETERMINED) {
       const res = await requestLibraryPermission();
       return res.granted;
     }
-
-    if (libraryPermission?.status === PermissionStatus.DENIED) {
+    if (libraryPermissions?.status === PermissionStatus.DENIED) {
+      Alert.alert("Недостаточно прав для доступа к фото");
       return false;
     }
-
     return true;
   };
 
   const pickImage = async () => {
-    const isPermissionGranted = await verifyMediaPermission();
-
-    if (!isPermissionGranted) return;
-
     const result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
+    if (!result.assets) {
+      return null;
+    }
+    return result.assets[0];
+  };
 
-    if (!result.assets) return;
-
-    onUpload(result.assets[0].uri);
+  const uploadToServer = async (uri: string, name: string) => {
+    const formData = new FormData();
+    formData.append("files", {
+      uri,
+      name,
+      type: "image/jpeg",
+    });
+    try {
+      const { data } = await axios.post<UploadResponse>(
+        FILE_API.uploadImage,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return data.urls.original;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error(error);
+      }
+      return null;
+    }
   };
 
   return (
-    <Pressable onPress={pickImage}>
+    <Pressable onPress={upload}>
       <View style={styles.container}>
-        <Text style={{ color: "white", fontSize: 14 }}>
-          Загрузить изображение
-        </Text>
+        <Text style={styles.text}>Загрузить изображение</Text>
       </View>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
     backgroundColor: Colors.violetDark,
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 17,
-    alignItems: 'center',
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 14,
+    color: "white",
   },
 });
