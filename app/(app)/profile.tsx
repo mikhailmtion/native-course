@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ImageUploader } from "../../shared/ImageUploader/ImageUploader";
+import { updateProfileAtom } from "../../entities/user/model/user.state";
+import { useAtom } from "jotai";
+import { Button } from "../../shared/Button/Button";
 
 export default function Profile() {
   const [image, setImage] = useState<string>("");
+  const [profile, updateProfile] = useAtom(updateProfileAtom);
+
+  const submitProfile = () => {
+		if (!image) {
+			return;
+		}
+		updateProfile({ photo: image });
+	};
+
+  useEffect(() => {
+    if (profile && profile.profile?.photo) {
+      setImage(profile.profile?.photo);
+    }
+  }, [profile]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -17,6 +34,7 @@ export default function Profile() {
         />
       )}
       <ImageUploader onUpload={setImage} />
+      <Button title="Сохранить" onPress={submitProfile} />
     </SafeAreaView>
   );
 }
