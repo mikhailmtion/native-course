@@ -8,12 +8,15 @@ import { StatusBar } from "expo-status-bar";
 import { Link, router } from "expo-router";
 import { useAtom } from "jotai";
 import { loginAtom } from "../entities/auth/model/auth.state";
+import { useScreenOrientation } from "../shared/hooks";
+import { Orientation } from "expo-screen-orientation";
 
 export default function Login() {
   const [{ error, access_token, isLoading }, login] = useAtom(loginAtom);
   const [localError, setLocalError] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const orientation = useScreenOrientation();
 
   const submit = () => {
     if (!email) {
@@ -51,8 +54,16 @@ export default function Login() {
           resizeMode="contain"
         />
         <View style={styles.form}>
-          <Input placeholder="Email" onChangeText={setEmail} />
-          <Input placeholder="Пароль" isPassword onChangeText={setPassword} />
+          <View
+            style={{
+              ...styles.inputs,
+              flexDirection:
+                orientation === Orientation.PORTRAIT_UP ? "column" : "row",
+            }}
+          >
+            <Input placeholder="Email" onChangeText={setEmail} />
+            <Input placeholder="Пароль" isPassword onChangeText={setPassword} />
+          </View>
           <Button title="Войти" onPress={submit} isLoading={isLoading} />
         </View>
         <Link href={"/restore"}>
@@ -84,5 +95,8 @@ const styles = StyleSheet.create({
   },
   link: {
     color: Colors.link,
+  },
+  inputs: {
+    gap: 16,
   },
 });
