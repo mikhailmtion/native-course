@@ -11,6 +11,8 @@ import { CourseCard } from "../../entities/course/ui/CourseCard";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Button } from "../../shared/Button/Button";
 import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import Constants from "expo-constants";
 
 export default function MyCourses() {
   const { isLoading, courses } = useAtomValue(courseAtom);
@@ -52,14 +54,21 @@ export default function MyCourses() {
       await requestPermissions();
     }
 
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Не забудь пройти курс 📬",
-        body: "Тело нотификации",
-        data: { alias: "typescript" },
-      },
-      trigger: { seconds: 5 },
-    });
+    if (Device.isDevice) {
+      const token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig?.extra?.eas.projectId,
+      });
+      console.log(token);
+    }
+
+    // await Notifications.scheduleNotificationAsync({
+    //   content: {
+    //     title: "Не забудь пройти курс 📬",
+    //     body: "Тело нотификации",
+    //     data: { alias: "typescript" },
+    //   },
+    //   trigger: { seconds: 5 },
+    // });
   };
 
   return (
