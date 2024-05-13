@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PurpleSchool Demo App",
-    "slug": "purple-school-demo-app",
+    "slug": "purpleschoolapp",
     "version": "1.0.0",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,17 +11,25 @@
       "resizeMode": "contain",
       "backgroundColor": "#2E2D3D"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "orientation": "portrait",
     "ios": {
       "supportsTablet": false
     },
-    "platform": ["ios", "android"],
+    "platform": [
+      "ios",
+      "android"
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -51,6 +59,15 @@
         }
       ]
     ],
-    "scheme": "your-app-scheme"
+    "scheme": "your-app-scheme",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ce1f96b4-a8f2-4742-8e75-f369c5a8c4ec"
+      }
+    },
+    "owner": "introair"
   }
 }
